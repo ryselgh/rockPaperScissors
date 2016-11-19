@@ -2,7 +2,7 @@ package com.bytecode.logic;
 
 public enum Risultato {
 	
-	WINNER("Hai vinto!"), LOSER("Hai perso!"), DRAW("Paritá!");
+	WINNER("Hai vinto!"), LOSER("Hai perso!"), DRAW("Parità!");
 	
 	private final String messaggio;
 	

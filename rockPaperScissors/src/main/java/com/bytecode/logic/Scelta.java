@@ -6,6 +6,8 @@ public enum Scelta {
 	
 	CARTA, FORBICE, SASSO;
 	public Risultato risultatoContro(Scelta altro) {
+		if(altro==null)
+			throw new NullPointerException("L'argomento non può essere nullo.");
 		if (this == altro) {
 			return Risultato.DRAW;
 		}
@@ -22,10 +24,14 @@ public enum Scelta {
 	}
 
 	public static Scelta parseInput(String input) {
+		if(input==null)
+			throw new NullPointerException("L'argomento non può essere nullo.");
 		return Enum.valueOf(Scelta.class, input.toUpperCase());
 	}
 
 	public static Scelta getSceltaCasuale(Random random) {
+		if(random==null)
+			throw new NullPointerException("L'argomento non può essere nullo.");
 		Scelta[] valori = Scelta.values();
 		return valori[random.nextInt(valori.length)];
 	}

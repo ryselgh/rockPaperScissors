@@ -14,6 +14,8 @@ public class Gioco {
 
 	
 	public Gioco(InputStream input) {
+		if (input == null)
+	        throw new NullPointerException("L'argomento non può essere nullo.");
 		this.scanner = new Scanner(input);
 		giocatori = new Giocatore[2];
 		selezionaAvversario();
@@ -46,7 +48,7 @@ public class Gioco {
 		chiudi();
 	}
 
-	public void round() {
+	private void round() {
 		ArrayList<Scelta> scelte = new ArrayList<Scelta>();
 		int id = 1;
 		do{
