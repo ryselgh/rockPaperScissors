@@ -1,0 +1,9 @@
+-classpath 'C:\\Users\\Erio\\git\\rockPaperScissors\\rockPaperScissors\\build\\classes\\main;C:\\Users\\Erio\\git\\rockPaperScissors\\rockPaperScissors\\build\\resources\\main;C:\\Users\\Erio\\.gradle\\caches\\modules-2\\files-2.1\\org.slf4j\\slf4j-api\\1.7.5\\6b262da268f8ad9eff941b25503a9198f0a0ac93\\slf4j-api-1.7.5.jar'
+-d 'C:\\Users\\Erio\\git\\rockPaperScissors\\rockPaperScissors\\build\\docs\\javadoc'
+-doctitle 'rockPaperScissors 0.1-SNAPSHOT API'
+-quiet 
+-windowtitle 'rockPaperScissors 0.1-SNAPSHOT API'
+'C:\\Users\\Erio\\git\\rockPaperScissors\\rockPaperScissors\\src\\main\\java\\com\\bytecode\\logic\\Giocatore.java'
+'C:\\Users\\Erio\\git\\rockPaperScissors\\rockPaperScissors\\src\\main\\java\\com\\bytecode\\logic\\Gioco.java'
+'C:\\Users\\Erio\\git\\rockPaperScissors\\rockPaperScissors\\src\\main\\java\\com\\bytecode\\logic\\Risultato.java'
+'C:\\Users\\Erio\\git\\rockPaperScissors\\rockPaperScissors\\src\\main\\java\\com\\bytecode\\logic\\Scelta.java'

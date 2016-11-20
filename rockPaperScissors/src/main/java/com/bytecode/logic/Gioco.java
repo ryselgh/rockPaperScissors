@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Questa classe gestisce l'intera logica di gioco,<br>
+ * per semplicità racchiude anche una CLI essenziale
+ */
 public class Gioco {
 
 	private final Scanner scanner;
@@ -12,7 +16,11 @@ public class Gioco {
 	private boolean IA;
 	private Giocatore[] giocatori;
 
-	
+	/**
+	 * Inizializza e avvia il gioco
+	 * @param input rappresenta un input stream di bytes, in questo caso è usato per interagire con l'utente.
+	 * @throws NullPointerException se l'argomento è nullo
+	 */
 	public Gioco(InputStream input) {
 		if (input == null)
 	        throw new NullPointerException("L'argomento non può essere nullo.");
@@ -22,7 +30,11 @@ public class Gioco {
 		avvia();
 	}
 
-
+	/**
+	 * Richiede all'utente di selezionare l'avversario:<br>
+	 *  1) Gioca contro il computer<br>
+	 *  2) Gioca contro un'altro avversario umano
+	 */
 	private void selezionaAvversario() {
 		System.out.println("- Morra Cinese -\n\nSeleziona il tuo avversario:\n  1) CPU\n  2) Umano\n");
 		switch(attendiInputValido("1","2")){
@@ -34,7 +46,11 @@ public class Gioco {
 			break;
 		}
 	}
-
+	
+	/**
+	 * Lancia un ciclo di gioco (basato sul parametro fissato ROUNDS)<br>
+	 * Inizializza i due giocatori e avvia i round
+	 */
 	private void avvia() {
 		giocatori[0] = new Giocatore();
 		giocatori[1] = new Giocatore();
@@ -47,7 +63,14 @@ public class Gioco {
 		valutaPartita();
 		chiudi();
 	}
-
+	
+	/**
+	 * Gestisce un singolo round.<br>
+	 * In particolare chiede all'utente di scegliere la sua mossa e,<br>
+	 * nel caso l'avversario sia un IA, genera una scelta casuale<br>
+	 * altrimenti chiede un secondo input al giocatore 2.<br>
+	 * Infine richiede l'esito della sfida e assegna un punto al vincitore.
+	 */
 	private void round() {
 		ArrayList<Scelta> scelte = new ArrayList<Scelta>();
 		int id = 1;
@@ -74,11 +97,20 @@ public class Gioco {
 		else
 			System.out.println("Giocatore " + (risultato.ordinal()+1) + " vince!\n");
 	}
-
+	
+	/**
+	 * Confronta le due mosse; la convenzione utilizzata è "X sfida Y".
+	 * @param scelte è un'array costituito dalle due mosse del round corrente.
+	 * @return l'esito per X
+	 */
 	private Risultato sceltaFatta(ArrayList<Scelta> scelte) {
 		return scelte.get(0).risultatoContro(scelte.get(1));
 	}
 	
+	/**
+	 * Controlla chi fra i 2 giocatori ha segnato più punti e stampa il vincitore o notifica la condizione di pareggio.
+	 * Infine richiede all'utente se avviare una nuova partita o meno ed esegue.
+	 */
 	private void valutaPartita(){
 		int punteggio1 = giocatori[0].getPunteggio();
 		int punteggio2 = giocatori[1].getPunteggio();
@@ -94,11 +126,19 @@ public class Gioco {
 		if(attendiInputValido("si","no").equals("si"))
 			avvia();
 	}
-
+	
+	/**
+	 * Chiude la console (il thread viene arrestato automaticamente)
+	 */
 	private void chiudi() {
 		scanner.close();
 	}
 	
+	/**
+	 * Controlla che l'utente inserisca un input valido
+	 * @param valide è l'array di stringhe accettate
+	 * @return l'input dell'utente una volta che questo è corretto
+	 */
 	private String attendiInputValido(String... valide){
 		while(true){
 			String input = scanner.next();
@@ -109,6 +149,7 @@ public class Gioco {
 		}
 	}
 
+	
 	public static void main(String[] args) {
 		new Gioco(System.in);
 	}

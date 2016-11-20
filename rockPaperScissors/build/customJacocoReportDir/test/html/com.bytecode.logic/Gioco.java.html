@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Gioco.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rockPaperScissors</a> &gt; <a href="index.source.html" class="el_package">com.bytecode.logic</a> &gt; <span class="el_source">Gioco.java</span></div><h1>Gioco.java</h1><pre class="source lang-java linenums">package com.bytecode.logic;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Gioco {
+
+	private final Scanner scanner;
+	private final static int ROUNDS = 3;
+	private boolean IA;
+	private Giocatore[] giocatori;
+
+	
+<span class="fc" id="L16">	public Gioco(InputStream input) {</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">		if (input == null)</span>
+<span class="fc" id="L18">	        throw new NullPointerException(&quot;L'argomento non può essere nullo.&quot;);</span>
+<span class="fc" id="L19">		this.scanner = new Scanner(input);</span>
+<span class="fc" id="L20">		giocatori = new Giocatore[2];</span>
+<span class="fc" id="L21">		selezionaAvversario();</span>
+<span class="fc" id="L22">		avvia();</span>
+<span class="fc" id="L23">	}</span>
+
+
+	private void selezionaAvversario() {
+<span class="fc" id="L27">		System.out.println(&quot;- Morra Cinese -\n\nSeleziona il tuo avversario:\n  1) CPU\n  2) Umano\n&quot;);</span>
+<span class="pc bpc" id="L28" title="4 of 10 branches missed.">		switch(attendiInputValido(&quot;1&quot;,&quot;2&quot;)){</span>
+		case &quot;1&quot;:
+<span class="fc" id="L30">			IA = true;</span>
+<span class="fc" id="L31">			break;</span>
+		case &quot;2&quot;:
+<span class="fc" id="L33">			IA = false;</span>
+			break;
+		}
+<span class="fc" id="L36">	}</span>
+
+	private void avvia() {
+<span class="fc" id="L39">		giocatori[0] = new Giocatore();</span>
+<span class="fc" id="L40">		giocatori[1] = new Giocatore();</span>
+<span class="fc" id="L41">		int cont = 0;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		while (cont &lt; ROUNDS){</span>
+<span class="fc" id="L43">			System.out.println(&quot;Round &quot; + (cont+1) + &quot;:&quot;);</span>
+<span class="fc" id="L44">			round();</span>
+<span class="fc" id="L45">			cont++;</span>
+		}
+<span class="fc" id="L47">		valutaPartita();</span>
+<span class="fc" id="L48">		chiudi();</span>
+<span class="fc" id="L49">	}</span>
+
+	private void round() {
+<span class="fc" id="L52">		ArrayList&lt;Scelta&gt; scelte = new ArrayList&lt;Scelta&gt;();</span>
+<span class="fc" id="L53">		int id = 1;</span>
+		do{
+<span class="fc" id="L55">			System.out.println(&quot;Giocatore &quot; + id +&quot;, qual è la tua scelta?&quot;);</span>
+<span class="fc" id="L56">			String input = attendiInputValido(&quot;sasso&quot;,&quot;carta&quot;,&quot;forbice&quot;);</span>
+<span class="fc" id="L57">			scelte.add(Scelta.parseInput(input));</span>
+<span class="fc" id="L58">			System.out.println(&quot;Il giocatore &quot; + id + &quot; ha scelto &quot; + scelte.get(id-1) + &quot;!&quot;);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if(IA){</span>
+<span class="fc" id="L60">				Scelta sceltaCPU = Scelta.getSceltaCasuale(new Random());</span>
+<span class="fc" id="L61">				scelte.add(sceltaCPU);</span>
+<span class="fc" id="L62">				System.out.println(&quot;La CPU ha scelto &quot; + sceltaCPU + &quot;!&quot;);</span>
+<span class="fc" id="L63">				id = 3;</span>
+<span class="fc" id="L64">			}else</span>
+<span class="fc" id="L65">				id++;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		}while(id&lt;3);</span>
+<span class="fc" id="L67">		Risultato risultato = sceltaFatta(scelte);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if(risultato.equals(Risultato.WINNER))</span>
+<span class="fc" id="L69">			giocatori[0].addPunto();</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		else if(risultato.equals(Risultato.LOSER))</span>
+<span class="fc" id="L71">			giocatori[1].addPunto();</span>
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">		if(IA || risultato.equals(Risultato.DRAW))</span>
+<span class="fc" id="L73">			System.out.println(risultato + &quot;\n&quot;);</span>
+		else
+<span class="fc" id="L75">			System.out.println(&quot;Giocatore &quot; + (risultato.ordinal()+1) + &quot; vince!\n&quot;);</span>
+<span class="fc" id="L76">	}</span>
+
+	private Risultato sceltaFatta(ArrayList&lt;Scelta&gt; scelte) {
+<span class="fc" id="L79">		return scelte.get(0).risultatoContro(scelte.get(1));</span>
+	}
+	
+	private void valutaPartita(){
+<span class="fc" id="L83">		int punteggio1 = giocatori[0].getPunteggio();</span>
+<span class="fc" id="L84">		int punteggio2 = giocatori[1].getPunteggio();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if(punteggio1 == punteggio2)</span>
+<span class="fc" id="L86">			System.out.println(&quot;La partita termina in parità!&quot;);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		else if(punteggio1 &gt; punteggio2)</span>
+<span class="fc" id="L88">			System.out.println(&quot;Vince la partita il giocatore 1!&quot;);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		else if(IA)</span>
+<span class="fc" id="L90">			System.out.println(&quot;Vince la partita la CPU!&quot;);</span>
+		else
+<span class="fc" id="L92">			System.out.println(&quot;Vince la partita il giocatore 2!&quot;);</span>
+<span class="fc" id="L93">		System.out.println(&quot;Vuoi avviare una nuova partita? (Si/No)&quot;);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if(attendiInputValido(&quot;si&quot;,&quot;no&quot;).equals(&quot;si&quot;))</span>
+<span class="nc" id="L95">			avvia();</span>
+<span class="fc" id="L96">	}</span>
+
+	private void chiudi() {
+<span class="fc" id="L99">		scanner.close();</span>
+<span class="fc" id="L100">	}</span>
+	
+	private String attendiInputValido(String... valide){
+		while(true){
+<span class="fc" id="L104">			String input = scanner.next();</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			for(String s: valide)</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				if(input.toLowerCase().equals(s))</span>
+<span class="fc" id="L107">					return input;</span>
+<span class="fc" id="L108">			System.out.println(&quot;Risposta non valida, riprova.&quot;);</span>
+<span class="fc" id="L109">		}</span>
+	}
+
+	public static void main(String[] args) {
+<span class="nc" id="L113">		new Gioco(System.in);</span>
+<span class="nc" id="L114">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
