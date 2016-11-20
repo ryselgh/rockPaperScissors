@@ -20,7 +20,7 @@ Di seguito il diagramma UML che mostra l'interazione fra le classi:
 ![UML Diagram](http://oi63.tinypic.com/21nk1lg.jpg)
 
 ### Testing
-Sono stati effettuati test con JUnit, sia di unità che funzionali. Inoltre il codice è stato analizzato tramite Gradle con JaCoCo e SoarQube. I report sono disponibili in *build/reports*, di seguito alcuni screenshot:
+Sono stati effettuati test con JUnit, sia di unità che funzionali. Inoltre il codice è stato analizzato tramite Gradle con JaCoCo e SonarQube. I report sono disponibili in *build/reports*, di seguito alcuni screenshot:
 ![JaCoCo report](http://oi66.tinypic.com/igmafl.jpg)
 ![SonarQube report](http://oi68.tinypic.com/2ed88kj.jpg)
 
