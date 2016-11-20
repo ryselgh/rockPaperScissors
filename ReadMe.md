@@ -4,7 +4,7 @@
 ---
 ### Funzione
 Il progetto modella il gioco della Morra Cinese.
-In fase embrionale il programma aveva come avversario il computer, o più semplicemente veniva fatta una scelta casuale. Dato che non erano state date particolari limitazioni ho deciso di aggiungere anche la possibilità di sfidare un'altro giocatore reale, utilizzando la stessa console.
+In fase embrionale il programma aveva come avversario il computer, o più semplicemente veniva fatta una scelta casuale. Dato che non erano state date particolari limitazioni ho deciso di aggiungere anche la possibilità di sfidare un'altro giocatore reale, utilizzando la stessa console. Infine, siccome è un gioco molto rapido (soprattuto se giocato su un calcolatore) l'ho strutturato in 3 round, estendibili dallo sviluppatore, dove chi ha segnato più punti vince.
 
 ### Struttura
  Il gioco è suddiviso in quattro classi:
